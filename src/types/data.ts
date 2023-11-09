@@ -1,0 +1,64 @@
+export const data = {
+  data: {
+    expenses: {
+      data: [
+        {
+          author: "Manito",
+          desc: "1 pacote de Cafe e 2 detergentes",
+          value: 20.57,
+          link: "https://drive.google.com/file/d/1-DJZAo9xjF2vSRRPxnAJe9s3zZn0XUfC/view?usp=drive_link",
+          date: "06/11/2023",
+        },
+        {
+          author: "Robson",
+          desc: "Papel higienico e acuçar no mês passado",
+          value: 17.45,
+          link: "https://drive.google.com/file/d/106wu-ec2CtbbhuVRuBZjMhoyXd7tC9va/view?usp=drive_link",
+          date: "10/10/2023",
+        },
+        {
+          author: "Manito",
+          desc: "Papel higienico",
+          value: 19.89,
+          link: "https://drive.google.com/file/d/10S1W1C1qWXeIELgP3Y45D6yna2H4QPPY/view?usp=drive_link",
+          date: "08/11/2023",
+        },
+      ],
+      total: 57.91,
+    },
+    monthStatus: {
+      currentMonth: "Novembro",
+      totalExpenses: 57.91,
+      totalOfMonth: 824.44,
+      balance: 766.5300000000001,
+    },
+    fines: [
+      {
+        desc: "Não fez a munutenção durante a sua semana",
+        status: true,
+        value: 10,
+        resident: "Jonathan",
+      },
+      {
+        desc: "Não fez a munutenção durante a sua semana",
+        status: true,
+        value: 10,
+        resident: "Zico",
+      },
+    ],
+    payers: [
+      { name: "Estefanio", status: false },
+      { name: "Felipe", status: true },
+      { name: "Gabriel", status: true },
+      { name: "Gustavo", status: false },
+      { name: "Jonathan", status: true },
+      { name: "Mairon", status: true },
+      { name: "Mani", status: false },
+      { name: "Petrus", status: false },
+      { name: "Rennan", status: true },
+      { name: "Robson", status: true },
+      { name: "Thiago", status: true },
+      { name: "Zico", status: false },
+    ],
+  },
+};

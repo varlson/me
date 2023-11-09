@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const Count_model_1 = __importDefault(require("./models/Count.model"));
 const router = (0, express_1.Router)();
 router.get("/", (req, res) => {
     res.status(200).json({
@@ -52,9 +56,17 @@ router.get("/envs", (req, res) => {
 // });
 router.post("/data", async (req, res) => {
     const { data } = req.body;
-    data["server"] = "done";
+    console.log(data);
+    const dados = {
+        expenses: data.expenses.data,
+        fines: data.fines,
+        monthStatus: data.monthStatus,
+        payers: data.payers,
+    };
+    const toSave = new Count_model_1.default(dados);
+    const saved = await toSave.save();
     return res.status(200).json({
-        data: data,
+        data: saved,
         status: true,
     });
 });
@@ -64,5 +76,28 @@ router.get("/data", async (req, res) => {
         data: "data",
         status: true,
     });
+});
+router.get("/get-count-balance", async (req, res) => {
+    try {
+        Count_model_1.default.find()
+            .then((data) => {
+            return res.status(200).json({
+                status: true,
+                data: data,
+            });
+        })
+            .catch((error) => {
+            return res.status(501).json({
+                status: false,
+                error: error,
+            });
+        });
+    }
+    catch (error) {
+        return res.status(502).json({
+            status: false,
+            error: error.message,
+        });
+    }
 });
 exports.default = router;

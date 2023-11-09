@@ -1,5 +1,8 @@
 import { Request, Response, Router } from "express";
 import { getGoogleAuthSheets } from "./googleAuth";
+// import { data } from "./types/data";
+import { CountType, ExpensesType, FineType } from "./types/types";
+import HomeCountModel from "./models/Count.model";
 const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
@@ -61,10 +64,19 @@ router.get("/envs", (req: Request, res: Response) => {
 router.post("/data", async (req: Request, res: Response) => {
   const { data } = req.body;
 
-  data["server"] = "done";
+  console.log(data);
+  const dados: CountType = {
+    expenses: data.expenses.data,
+    fines: data.fines,
+    monthStatus: data.monthStatus,
+    payers: data.payers,
+  };
+
+  const toSave = new HomeCountModel(dados);
+  const saved = await toSave.save();
 
   return res.status(200).json({
-    data: data,
+    data: saved,
     status: true,
   });
 });
@@ -75,6 +87,29 @@ router.get("/data", async (req: Request, res: Response) => {
     data: "data",
     status: true,
   });
+});
+
+router.get("/get-count-balance", async (req: Request, res: Response) => {
+  try {
+    HomeCountModel.find()
+      .then((data) => {
+        return res.status(200).json({
+          status: true,
+          data: data,
+        });
+      })
+      .catch((error) => {
+        return res.status(501).json({
+          status: false,
+          error: error,
+        });
+      });
+  } catch (error: any) {
+    return res.status(502).json({
+      status: false,
+      error: error.message,
+    });
+  }
 });
 
 export default router;

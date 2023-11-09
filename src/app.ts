@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import mongoose from "mongoose";
 
 const app = express();
 app.use(cors());
@@ -17,6 +18,15 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/api", router);
 
-app.listen(8111, () => {
-  console.info("Server running at 8111");
+app.listen(8111, async () => {
+  const url = process.env.DATABASE_URL;
+  mongoose
+    .connect(url as string)
+    .then(() => {
+      console.info("Server running at 8111");
+    })
+    .catch((error) => {
+      console.info("server cant be started");
+      console.info(error);
+    });
 });

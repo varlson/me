@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 const routes_1 = __importDefault(require("./routes"));
@@ -18,6 +19,15 @@ app.get("/", (req, res) => {
     });
 });
 app.use("/api", routes_1.default);
-app.listen(8111, () => {
-    console.info("Server running at 8111");
+app.listen(8111, async () => {
+    const url = process.env.DATABASE_URL;
+    mongoose_1.default
+        .connect(url)
+        .then(() => {
+        console.info("Server running at 8111");
+    })
+        .catch((error) => {
+        console.info("server cant be started");
+        console.info(error);
+    });
 });
