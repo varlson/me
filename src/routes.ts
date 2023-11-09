@@ -61,6 +61,8 @@ router.get("/envs", (req: Request, res: Response) => {
 router.post("/data", async (req: Request, res: Response) => {
   const { data } = req.body;
 
+  data["server"] = "done";
+
   return res.status(200).json({
     data: data,
     status: true,
